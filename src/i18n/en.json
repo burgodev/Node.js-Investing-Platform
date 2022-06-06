@@ -1,0 +1,17 @@
+{
+    "Success": "Success",
+    "User": {
+        "success_created": "Success on create user",
+        "already_exists": "User already exists",
+        "success_updated": "Success on update user",
+        "success_password_changed": "Success on change password",
+        "not_found": "User not found",
+        "invalid_current_password": "Invalid current password",
+        "invalid_information": "Invalid information",
+        "failed_on_update": "Failed on update user"
+    },
+    "auth": {
+        "login_success": "Login with success",
+        "invalid_credentials": "Invalid credentials"
+    }
+}

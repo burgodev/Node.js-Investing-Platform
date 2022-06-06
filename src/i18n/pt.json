@@ -1,0 +1,18 @@
+{
+    "Success": "Sucesso",
+    "User": {
+        "success_created": "Usuário criado com sucesso",
+        "already_exists": "Usuário já cadastrado",
+        "success_updated": "Usuário editado com sucesso",
+        "success_password_changed": "Senha alterada com sucesso",
+        "not_found": "Usuário não encontrado",
+        "invalid_current_password": "Senha atual inválida",
+        "invalid_information": "Informações inválidas",
+        "failed_on_update": "Falha ao atualizar o usuário"
+    },
+    "auth": {
+        "login_success": "Login feito com sucesso",
+        "invalid_credentials": "Credenciais inválidas"
+    }
+}
+

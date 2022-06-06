@@ -1,0 +1,109 @@
+
+generator client {
+    provider = "prisma-client-js"
+    previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url = env("DATABASE_URL")
+}
+
+model User {
+    id String @id @db.Uuid @default(uuid())
+    
+    is_active Boolean @default(true)
+    email String @unique
+    email_checked_at DateTime?
+    birth_date DateTime?
+    name String
+    phone_number String?
+    document_number String?
+    password String
+    balance Float @default(0.0)
+    balance_available_for_withdraw Float @default(0.0)
+
+    zipcode String?
+    country String?
+    state String?
+    city String?
+    address_line String?
+
+    created_at DateTime @default(now())
+    updated_at DateTime? @updatedAt
+
+    role_id String @db.Uuid
+    
+    role Role? @relation(fields: [role_id], references: [id])
+    
+    password_recoveries PasswordRecovery[]
+    transactions Transaction[]
+    contract Contract?
+    
+    @@map("users")
+}
+
+model Role {
+    id String @id @db.Uuid @default(uuid())
+
+    name String @unique
+
+    users User[]
+
+    @@map("roles")
+}
+
+model PasswordRecovery {
+    id String @id @db.Uuid @default(uuid())
+
+    user_id String @db.Uuid
+    created_at DateTime @default(now())
+    expires_at DateTime
+    is_valid Boolean @default(true)
+    token String @unique
+
+    user User @relation(fields: [user_id], references: [id])
+
+    @@map("password_recoveries")
+}
+    
+model Transaction {
+    id String @id @db.Uuid @default(uuid()) 
+    
+    user_id String @db.Uuid
+    
+    balance Float
+    type TransactionType
+    gain_month Int? // for gain transactions, register here the month that resulted that gain
+    gain_year Int? // for gain transactions, register here the year that resulted that gain
+    user_balance_before_transaction Float?
+    percentual_raw_profit Float?
+    percentual_liquid_profit Float?
+
+    created_at DateTime @default(now())    
+
+    user User @relation(fields: [user_id], references: [id])
+
+    @@map("transactions")
+}
+
+enum TransactionType {
+    DEPOSIT
+    WITHDRAW
+    GAIN
+}
+
+model Contract {
+    id String @id @db.Uuid @default(uuid())
+    user_id String @db.Uuid
+    period Int
+    is_expired Boolean @default(false)
+    expires_at DateTime? // quando o contrato vence
+    started_at DateTime @default(now())
+    
+    created_at DateTime @default(now())
+
+    user User @relation(fields: [user_id], references: [id])
+
+    @@map("contracts")
+}
